@@ -28,7 +28,7 @@ packer {
 
 variable "iso_checksum" {
   type = string
-  default = "sha256:e20445907daefbfcdb05ba034e9fc4cf91e0e8dc164ebd7266ffb8fdd8ea99e7"
+  default = "sha256:ee3ac97fdffab58652421941599902012179c37535aece76824673105169c4a2"
 }
 
 variable "disk_size" {
@@ -39,14 +39,14 @@ variable "disk_size" {
 variable "urls" {
   type = list(string)
   default = [
-    "iso/Rocky-9.4-x86_64-dvd.iso",
-    "https://mirrors.vinters.com/rocky/9.4/isos/x86_64/Rocky-9.4-x86_64-dvd.iso"
+    "iso/Rocky-9.4-x86_64-minimal.iso",
+    "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.4-x86_64-minimal.iso"
     ]
 }
 
 variable "iso_path" {
   type = string
-  default = "iso/Rocky-9.4-x86_64-dvd.iso"
+  default = "iso/Rocky-9.4-x86_64-minimal.iso"
 }
 
 # SOURCE BLOCK
@@ -71,8 +71,8 @@ source "virtualbox-iso" "rocky" {
     ["modifyvm", "{{ .Name }}", "--vram", "16"],
     ["modifyvm", "{{ .Name }}", "--graphicscontroller", "vmsvga"],
     ["modifyvm", "{{ .Name }}", "--nat-localhostreachable1", "on"],
-    ["modifyvm", "{{ .Name }}", "--nic2", "hostonly"],
-    ["modifyvm", "{{ .Name }}", "--hostonlyadapter2", "vboxnet0"],
+    ["modifyvm", "{{ .Name }}", "--nic2", "hostonlynet"],
+    ["modifyvm", "{{ .Name }}", "--hostonlynet2", "vboxnet0"],
     ["modifyvm", "{{ .Name }}", "--clipboard", "bidirectional"]
   ]
   vm_name          = "Rocky94"
